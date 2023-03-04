@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect,useState } from 'react';
+import Advices from './Advices';
+
 
 function App() {
+
+  const [advice, setAdvice] = useState("");
+
+  const fetchAdvice = async () => {
+    const response = await fetch(`http://www.boredapi.com/api/activity/`);
+    const data = await response.json();
+    setAdvice(data.activity);
+  }
+
+  useEffect(() => {
+    fetchAdvice();
+  }, []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Advices/>
+      <button onClick={fetchAdvice}>Tips here</button>
+
+      <div className='advice'>
+      <p>{advice}.</p>
+      </div>
+
     </div>
   );
 }
