@@ -7,16 +7,15 @@ function App() {
 
   const [advice, setAdvice] = useState("");
 
+  useEffect(() => {
+    fetchAdvice();
+  }, []);
+
   const fetchAdvice = async () => {
     const response = await fetch(`http://www.boredapi.com/api/activity/`);
     const data = await response.json();
     setAdvice(data.activity);
   }
-
-  useEffect(() => {
-    fetchAdvice();
-  }, []);
-
 
   return (
     <div className="container">
